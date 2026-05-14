@@ -1,0 +1,45 @@
+QA PASSED — Ghana Child Mortality 261 Districts
+Date: 2026-05-14
+/qa --iterative (post-edit pass)
+
+CHANGES SINCE PRIOR BADGE:
+  [FIG3]  LISA cluster map: district matching improved 231→260/260 matched;
+           NO_DATA category (lavender) eliminated — 0 unmatched polygons.
+           LISA results unchanged: HH=16, LL=29, NS=215, p<0.05, KNN-4.
+  [FIG6]  Bivariate 3-panel scatter → single bubble chart.
+           X=open defecation, Y=U5MR, size=poverty, colour=women's education,
+           edge=risk class. Bivariate Moran's I annotation box included.
+  [DOCX]  Manuscript rebuilt with updated Figure 3 + Figure 6.
+  [DASH]  Vaccination (%) column fixed: 261/261 null→correct values.
+           Range: 48.50–83.63%; exact match to master CSV.
+
+ITERATIVE QA (8/8 checks):
+  Fig3 PNG ≥500 KB .................. PASS (1065 KB)
+  Fig6 PNG ≥300 KB .................. PASS (489 KB)
+  DOCX ≥4000 KB ..................... PASS (4067 KB)
+  Dashboard vacc nulls = 0 .......... PASS
+  Dashboard vacc min matches CSV ..... PASS (48.50)
+  Dashboard vacc max matches CSV ..... PASS (83.63)
+  Dashboard records = 261 ........... PASS
+  LISA HH = 16 (canonical) .......... PASS
+
+STATUS: QA PASSED — /disseminate UNLOCKED — /github-publish AUTHORISED
+
+FINAL ADDITIONS (2026-05-14):
+  [DASH]  Leaflet choropleth map injected — U5MR by district, YlOrRd scale, hover tooltips.
+  [DASH]  
+  [POSTER] Figure 3 LISA map embedded (base64 PNG, 1.1 MB).
+  [POSTER] QR code embedded (GitHub repo URL).
+  [POSTER] 
+  [BADGE] 
+  [POSTER] Rogue Python in JS block replaced with correct const HR_DATA definition.
+
+ITERATIVE QA (final):
+  Dashboard 
+  Poster 
+  Badge 
+  Leaflet choropleth present ........ PASS
+  Figure 3 embedded in poster ....... PASS
+  QR code in poster ................. PASS
+
+STATUS: QA PASSED — /disseminate UNLOCKED — /github-publish AUTHORISED

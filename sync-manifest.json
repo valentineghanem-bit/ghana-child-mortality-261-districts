@@ -1,0 +1,14 @@
+{
+  "study_title": "Subnational Spatial Distribution and Ensemble ML Predictors of Neonatal and Under-Five Mortality Across Ghana's 261 Health Districts",
+  "authors": "Valentine Golden Ghanem",
+  "affiliations": "Ghana COCOBOD Cocoa Clinic, Accra",
+  "study_period": "2022 Ghana DHS; 2021 Ghana Census",
+  "geographic_scope": "261 health districts, Ghana (16 regions)",
+  "sample_size_N": "261 districts",
+  "primary_outcome": "Under-five mortality rate (U5MR) and neonatal mortality rate (NMR) per 1,000 live births",
+  "primary_result": "U5MR range 20\u201372/1000 LB; Moran's I=0.7783 (z=19.322, p<0.001); 72 high-risk districts (27.6%); top predictor: early breastfeeding initiation (Gini=0.224)",
+  "top_finding_1": "Significant spatial clustering confirmed (Global Moran's I=0.7783, z=19.322, p<0.001, KNN-4); 16 HH and 30 LL LISA clusters",
+  "top_finding_2": "Stacked ensemble (RF+GB) CV AUC=1.00 (ecological artifact); Gini top-3: early breastfeeding (0.224), diarrhoea (0.182), full vaccination (0.136)",
+  "reporting_guideline": "STROBE (observational, ecological design)",
+  "target_journal": "BMC Public Health / IJID (Ghana APC waiver verified)"
+}

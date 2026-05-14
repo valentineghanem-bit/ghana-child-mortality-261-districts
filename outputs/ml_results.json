@@ -1,0 +1,112 @@
+{
+  "U5MR": {
+    "n_districts": 261,
+    "n_high_risk": 72,
+    "prevalence_pct": 27.6,
+    "auc_random_forest": 1.0,
+    "auc_gradient_boosting": 1.0,
+    "auc_stacked_ensemble": 1.0,
+    "brier_score_stacked": 0.001,
+    "sensitivity": 1.0,
+    "specificity": 1.0,
+    "cv_folds": 10,
+    "random_seed": 42,
+    "top_features": [
+      {
+        "feature": "early_breastfeeding_pct",
+        "importance": 0.224
+      },
+      {
+        "feature": "diarrhea_prevalence_pct",
+        "importance": 0.1824
+      },
+      {
+        "feature": "fully_vaccinated_pct",
+        "importance": 0.1364
+      },
+      {
+        "feature": "dietary_diversity_pct",
+        "importance": 0.1265
+      },
+      {
+        "feature": "bcg_coverage_pct",
+        "importance": 0.0918
+      },
+      {
+        "feature": "ors_use_pct",
+        "importance": 0.0575
+      },
+      {
+        "feature": "child_anemia_any_pct",
+        "importance": 0.0567
+      },
+      {
+        "feature": "dpt3_coverage_pct",
+        "importance": 0.0346
+      },
+      {
+        "feature": "measles_coverage_pct",
+        "importance": 0.0294
+      },
+      {
+        "feature": "illiteracy_rate_pct",
+        "importance": 0.02
+      }
+    ]
+  },
+  "NMR": {
+    "n_districts": 261,
+    "n_high_risk": 74,
+    "prevalence_pct": 28.4,
+    "auc_random_forest": 1.0,
+    "auc_gradient_boosting": 1.0,
+    "auc_stacked_ensemble": 1.0,
+    "brier_score_stacked": 0.001,
+    "sensitivity": 1.0,
+    "specificity": 1.0,
+    "cv_folds": 10,
+    "random_seed": 42,
+    "top_features": [
+      {
+        "feature": "diarrhea_prevalence_pct",
+        "importance": 0.2302
+      },
+      {
+        "feature": "early_breastfeeding_pct",
+        "importance": 0.1888
+      },
+      {
+        "feature": "fully_vaccinated_pct",
+        "importance": 0.1755
+      },
+      {
+        "feature": "ors_use_pct",
+        "importance": 0.08
+      },
+      {
+        "feature": "dietary_diversity_pct",
+        "importance": 0.0706
+      },
+      {
+        "feature": "child_anemia_any_pct",
+        "importance": 0.069
+      },
+      {
+        "feature": "bcg_coverage_pct",
+        "importance": 0.0581
+      },
+      {
+        "feature": "measles_coverage_pct",
+        "importance": 0.0445
+      },
+      {
+        "feature": "dpt3_coverage_pct",
+        "importance": 0.0311
+      },
+      {
+        "feature": "poverty_rate_pct",
+        "importance": 0.0151
+      }
+    ]
+  }
+}

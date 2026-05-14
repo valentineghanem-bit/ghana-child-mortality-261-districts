@@ -1,0 +1,21 @@
+# Manuscripts (excluded per Tenet 20)
+*.docx
+*_draft.*
+*.tex
+
+# Credentials
+.env
+github.env
+
+# Raw/identifiable data
+*_raw.*
+*_identifiable.*
+
+# OS artifacts
+.DS_Store
+__pycache__/
+*.pyc
+Thumbs.db
+
+# Large temp files
+*.log

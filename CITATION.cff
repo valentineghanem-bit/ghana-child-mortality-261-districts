@@ -1,0 +1,24 @@
+cff-version: 1.2.0
+message: "If you use this code or data, please cite as below."
+authors:
+  - family-names: "Ghanem"
+    given-names: "Valentine Golden"
+    orcid: "https://orcid.org/0009-0002-8332-0220"
+    affiliation: "Ghana COCOBOD Cocoa Clinic, Accra, Ghana"
+title: "Subnational Spatial Distribution and Ensemble ML Predictors of Neonatal and Under-Five Mortality Across Ghana's 261 Health Districts"
+version: "1.0.0"
+date-released: "2026-05-13"
+url: "https://github.com/valentineghanem-bit/ghana-child-mortality-261-districts"
+repository-code: "https://github.com/valentineghanem-bit/ghana-child-mortality-261-districts"
+license: MIT
+keywords:
+  - "under-five mortality"
+  - "neonatal mortality"
+  - "spatial epidemiology"
+  - "machine learning"
+  - "XGBoost"
+  - "SHAP"
+  - "Ghana"
+  - "LISA"
+  - "child survival"
+  - "sub-Saharan Africa"
