@@ -1,7 +1,7 @@
 """
 test_canonical_values.py
 Pytest canonical assertions — Child Mortality Ghana 261 Districts
-Author: Valentine Golden Ghanem | AIPOCH v6.0 | 2026-05-13
+Author: Valentine Golden Ghanem | 2026-05-13
 Run: pytest tests/ -v
 EX-024 pattern: ≥10 canonical assertions before QA.
 """

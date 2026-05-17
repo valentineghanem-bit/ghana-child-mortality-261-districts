@@ -1,7 +1,7 @@
 """
 06_generate_figures.py
 Generate all 6 publication-quality manuscript figures using the Ghana district GeoJSON.
-Author: Valentine Golden Ghanem | AIPOCH v6.0 | 2026-05-14
+Author: Valentine Golden Ghanem | 2026-05-14
 Output: figures/Figure1–6_*.png  (300 DPI, vector-equivalent raster)
 """
 

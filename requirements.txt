@@ -1,5 +1,5 @@
 # requirements.txt — Child Mortality Ghana 261 Districts
-# Author: Valentine Golden Ghanem | AIPOCH v6.0 | 2026-05-13
+# Author: Valentine Golden Ghanem | 2026-05-13
 # Python 3.10+
 # Install: pip install -r requirements.txt
 

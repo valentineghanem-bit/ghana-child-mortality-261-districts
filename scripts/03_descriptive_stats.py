@@ -1,7 +1,7 @@
 """
 03_descriptive_stats.py
 Descriptive Statistics & Table 1 — Child Mortality Ghana 261 Districts
-Author: Valentine Golden Ghanem | AIPOCH v6.0 | 2026-05-13
+Author: Valentine Golden Ghanem | 2026-05-13
 Outputs: outputs/table1.csv, outputs/descriptive_summary.json
 """
 

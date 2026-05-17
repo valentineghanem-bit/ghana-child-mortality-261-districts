@@ -1,7 +1,7 @@
 """
 02_ml_pipeline.py
 Ensemble ML Pipeline — Child Mortality Risk Prediction, Ghana 261 Districts
-Author: Valentine Golden Ghanem | AIPOCH v6.0 | 2026-05-13
+Author: Valentine Golden Ghanem | 2026-05-13
 Inputs:  data/Ghana_ChildMortality_261District_MasterDataset.csv
 Outputs: outputs/ml_results.json  — all ML metrics (canonical values)
          outputs/figures/          — SHAP summary, waterfall, dependence plots

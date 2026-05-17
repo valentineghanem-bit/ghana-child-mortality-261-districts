@@ -2,7 +2,7 @@
 07_rebuild_manuscript_with_figures.py
 Rebuild full IMRAD manuscript with all 6 figures inserted inline after their
 respective Results paragraphs, with Figure N citations in running text.
-Author: Valentine Golden Ghanem | AIPOCH v6.0 | 2026-05-14
+Author: Valentine Golden Ghanem | 2026-05-14
 Output: manuscript/Ghana_ChildMortality_261District_Manuscript.docx
 """
 

@@ -1,7 +1,7 @@
 """
 01_spatial_analysis.py
 Spatial Analysis — Child Mortality Across Ghana's 261 Health Districts
-Author: Valentine Golden Ghanem | AIPOCH v6.0 | 2026-05-13
+Author: Valentine Golden Ghanem | 2026-05-13
 Inputs:  data/Ghana_ChildMortality_261District_MasterDataset.csv
          data/Ghana_New_260_District.geojson  (261 features)
 Outputs: outputs/figures/  — choropleth maps, LISA cluster maps, Moran scatter
