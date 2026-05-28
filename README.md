@@ -9,20 +9,18 @@
 **Date:** May 2026
 **Status:** Manuscript in preparation
 
-> Valentine Golden Ghanem (2026). *Subnational Spatial Distribution and Ensemble ML Predictors of Neonatal and Under-Five Mortality Across Ghana's 261 Health Districts.* GitHub repository. https://github.com/valentineghanem-bit/ghana-child-mortality-261-districts
-
 ---
 
 ## 1. Abstract
 
-This study characterises the subnational spatial distribution of neonatal mortality (NMR) and under-five mortality (U5MR) across Ghana's 261 health districts, identifies high-risk spatial clusters using global and local spatial autocorrelation, and develops ensemble machine learning models to predict district-level mortality risk. The analysis integrates 2022 Ghana DHS regional data, 2021 Census district estimates, and Ghana Statistical Service geospatial boundaries to generate actionable district-level risk maps.
+This study characterises the subnational spatial distribution of neonatal mortality (NMR) and under-five mortality (U5MR) across Ghana's 261 health districts, identifies high-risk spatial clusters using global and local spatial autocorrelation, and develops ensemble machine learning models to predict district-level mortality risk. The analysis integrates 2022 Ghana DHS regional data, 2021 Census district estimates, and Ghana Statistical Service geospatial boundaries to generate actionable district-level risk maps. A stacked ensemble (Random Forest + Gradient Boosting with logistic meta-learner) under 10-fold stratified cross-validation is used for risk classification.
 
 ---
 
 ## 2. Research Question & Aims
 
 - **Primary:** Quantify the subnational distribution of NMR and U5MR across Ghana's 261 health districts.
-- **Secondary:** (a) Detect spatial clusters using global Moran's I, LISA, and bivariate Moran's I (NMR × U5MR); (b) rank predictors using Random Forest Gini importance; (c) build a stacked ensemble classifier with logistic meta-learner; (d) produce district-level risk maps for programmatic targeting.
+- **Secondary:** (a) Detect spatial clusters using Global Moran's I, LISA, and bivariate Moran's I (NMR × U5MR); (b) rank predictors using Random Forest Gini importance; (c) build a stacked ensemble classifier with logistic meta-learner; (d) produce district-level risk maps for programmatic targeting.
 
 ---
 
@@ -32,11 +30,12 @@ This study characterises the subnational spatial distribution of neonatal mortal
 |--------|------|---------|
 | Global Moran's I (KNN-4, 999 permutations) | esda / libpysal | Spatial autocorrelation of U5MR and NMR |
 | LISA | esda | Local spatial cluster detection |
-| Bivariate Moran's I | esda | Co-clustering of NMR and U5MR |
+| Bivariate Moran's I | esda | NMR × U5MR co-clustering |
 | Random Forest | scikit-learn | Predictor importance (Gini impurity) |
 | Gradient Boosting | scikit-learn | Mortality risk prediction |
-| Stacked Ensemble (logistic meta-learner) | scikit-learn | Final ensemble classification |
+| Stacked ensemble (logistic meta-learner) | scikit-learn | Final ensemble classification |
 | 10-fold stratified CV | scikit-learn | Model validation |
+| Spatial diagnostics (R) | spdep / spatialreg | OLS / SLM / SEM model selection |
 
 ---
 
@@ -44,11 +43,11 @@ This study characterises the subnational spatial distribution of neonatal mortal
 
 | Source | Variables | Year | Access |
 |--------|-----------|------|--------|
-| 2022 Ghana DHS | Regional U5MR, NMR, breastfeeding, ANC coverage | 2022 | [dhsprogram.com](https://dhsprogram.com) (registration) |
-| GSS 2021 Census | District population, socioeconomic indicators | 2021 | Ghana Statistical Service |
+| Ghana DHS 2022 | Regional U5MR, NMR, breastfeeding, ANC coverage | 2022 | [dhsprogram.com](https://dhsprogram.com) (registration) |
+| GSS 2021 Census | District population, socioeconomic indicators | 2021 | [statsghana.gov.gh](https://statsghana.gov.gh) |
 | Ghana Statistical Service GeoJSON | District boundaries (261 districts) | 2021 | [statsghana.gov.gh](https://statsghana.gov.gh) |
 
-> DHS data accessed under registration. Ghana Health Service Ethics Review Board approval obtained.
+> DHS data accessed under standard DHS Programme Data Use Agreement. No individual participant data redistributed.
 
 ---
 
@@ -60,8 +59,9 @@ This study characterises the subnational spatial distribution of neonatal mortal
 | NMR range | 8.0–23.0 per 1,000 live births (median: 17.0 [IQR: 12.5–18.0]) |
 | High-risk districts | 72 (27.6%) — U5MR ≥48 per 1,000 LB |
 | Global Moran's I (U5MR) | 0.7783 (z=19.322, p<0.001, KNN-4) |
-| Stacked ensemble CV AUC | 1.00 (ecological artifact — see discussion) |
+| Stacked ensemble CV AUC | 1.00 (ecological aggregation artefact — see discussion) |
 | Top RF predictor (Gini) | Early breastfeeding initiation (0.224) |
+| Districts analysed | 261 |
 
 ---
 
@@ -69,16 +69,21 @@ This study characterises the subnational spatial distribution of neonatal mortal
 
 ```
 ghana-child-mortality-261-districts/
-├── data/
 ├── scripts/
 │   ├── 01_spatial_analysis.py
 │   ├── 02_ml_pipeline.py
-│   └── 03_descriptive_stats.py
+│   ├── 03_descriptive_stats.py
+│   ├── spatial_utils.py            # Reusable spatial analysis utilities
+│   └── spatial_diagnostics.R       # R: spatial autocorrelation diagnostics
+├── app.py                          # Plotly Dash interactive application
+├── analysis.R                      # R: spatial regression + model selection
 ├── dashboard/
 │   └── Ghana_ChildMortality_261District_Dashboard.html
 ├── poster/
-├── tests/
+│   └── Ghana_ChildMortality_261District_Poster.html
+├── data/
 ├── outputs/
+├── tests/
 ├── requirements.txt
 └── CITATION.cff
 ```
@@ -88,22 +93,23 @@ ghana-child-mortality-261-districts/
 ## 7. Reproducibility
 
 ### 7.1 Requirements
-- Python 3.12 (see `requirements.txt` for pinned versions)
-- R 4.3+ (for R scripts; see `renv.lock` or `analysis.R` header for pinned packages)
-- Random seed: 42 throughout (set via `random_state=42` and `np.random.seed(42)`)
+
+- Python 3.12 (pinned in `requirements.txt`)
+- R 4.3+ with packages: spdep, spatialreg, dplyr (see `analysis.R` header)
+- Random seed: 42 throughout
 - Estimated runtime: ~5–8 minutes on a standard laptop
 - Tested on: Ubuntu 22.04 / macOS 14 / Windows 11 (CI: GitHub Actions)
 
 ### 7.2 Clone & install
+
 ```bash
 git clone https://github.com/valentineghanem-bit/ghana-child-mortality-261-districts.git
 cd ghana-child-mortality-261-districts
 pip install -r requirements.txt
-# For R scripts (optional):
-Rscript -e "if (!requireNamespace('renv', quietly=TRUE)) install.packages('renv'); renv::restore()"
 ```
 
 ### 7.3 Run the analytical pipeline
+
 ```bash
 python scripts/03_descriptive_stats.py
 python scripts/01_spatial_analysis.py
@@ -111,44 +117,50 @@ python scripts/02_ml_pipeline.py
 ```
 
 ### 7.4 Run the test suite
+
 ```bash
 pytest tests/ -v
 ```
 
 ### 7.5 Launch the interactive Dash application
+
 ```bash
 python app.py
-# Navigate to http://127.0.0.1:8050 in your browser
+# Visit http://127.0.0.1:8050
 ```
 
 ### 7.6 Open the static HTML dashboard
-Open `dashboard/Ghana_ChildMortality_261District_Dashboard.html` in any modern browser. No server required.
+
+```bash
+# macOS
+open dashboard/Ghana_ChildMortality_261District_Dashboard.html
+# Windows
+start dashboard/Ghana_ChildMortality_261District_Dashboard.html
+# Linux
+xdg-open dashboard/Ghana_ChildMortality_261District_Dashboard.html
+```
 
 ---
 
 ## 8. Outputs
 
-- **Static HTML dashboard:** `dashboard/Ghana_ChildMortality_261District_Dashboard.html`
-- **Poster:** `poster/`
-- **Result tables:** `outputs/*.csv`
-- **Figures:** `outputs/*.png` (300 DPI)
+| Output | Description |
+|--------|-------------|
+| `data/processed/` | Master CSV, spatial weights, risk scores |
+| `outputs/figures/` | Publication-quality PNG figures (300 DPI) |
+| `dashboard/` | Self-contained interactive HTML dashboard |
+| `poster/` | A0 conference poster (HTML, print-ready) |
 
----
+## 8a. Downloadable Artefacts (HTML)
 
-## 8a. Downloadable artefacts (HTML)
-
-Both the interactive dashboard and the conference poster are committed to the repository as **self-contained HTML files** — no server, no build step. They can be:
-
-- **Viewed in browser:** open the rendered preview, or clone the repo and open locally
-- **Downloaded:** right-click → *Save link as*, or use the raw URL
+Both the interactive dashboard and the conference poster are committed as self-contained HTML files — no server, no build step required.
 
 | Artefact | View on GitHub | Live preview | Direct download (raw HTML) |
-|----------|----------------|--------------|------------------------------|
-| Interactive dashboard | [`Ghana_ChildMortality_261District_Dashboard.html`](https://github.com/valentineghanem-bit/ghana-child-mortality-261-districts/blob/main/dashboard/Ghana_ChildMortality_261District_Dashboard.html) | [Open preview](https://htmlpreview.github.io/?https://github.com/valentineghanem-bit/ghana-child-mortality-261-districts/blob/main/dashboard/Ghana_ChildMortality_261District_Dashboard.html) | [Download](https://raw.githubusercontent.com/valentineghanem-bit/ghana-child-mortality-261-districts/main/dashboard/Ghana_ChildMortality_261District_Dashboard.html) |
-| Conference poster | [`Ghana_ChildMortality_261District_Poster.html`](https://github.com/valentineghanem-bit/ghana-child-mortality-261-districts/blob/main/poster/Ghana_ChildMortality_261District_Poster.html) | [Open preview](https://htmlpreview.github.io/?https://github.com/valentineghanem-bit/ghana-child-mortality-261-districts/blob/main/poster/Ghana_ChildMortality_261District_Poster.html) | [Download](https://raw.githubusercontent.com/valentineghanem-bit/ghana-child-mortality-261-districts/main/poster/Ghana_ChildMortality_261District_Poster.html) |
+|----------|---------------|--------------|---------------------------|
+| Interactive dashboard | [View](https://github.com/valentineghanem-bit/ghana-child-mortality-261-districts/blob/main/dashboard/Ghana_ChildMortality_261District_Dashboard.html) | [Preview](https://htmlpreview.github.io/?https://github.com/valentineghanem-bit/ghana-child-mortality-261-districts/blob/main/dashboard/Ghana_ChildMortality_261District_Dashboard.html) | [Download](https://raw.githubusercontent.com/valentineghanem-bit/ghana-child-mortality-261-districts/main/dashboard/Ghana_ChildMortality_261District_Dashboard.html) |
+| Conference poster | [View](https://github.com/valentineghanem-bit/ghana-child-mortality-261-districts/blob/main/poster/Ghana_ChildMortality_261District_Poster.html) | [Preview](https://htmlpreview.github.io/?https://github.com/valentineghanem-bit/ghana-child-mortality-261-districts/blob/main/poster/Ghana_ChildMortality_261District_Poster.html) | [Download](https://raw.githubusercontent.com/valentineghanem-bit/ghana-child-mortality-261-districts/main/poster/Ghana_ChildMortality_261District_Poster.html) |
 
-> **Tip:** the dashboard works fully offline once downloaded. The poster is print-ready at A0 (841 × 1189 mm).
-
+> **Tip:** The dashboard works fully offline once downloaded. The poster is print-ready at A0 (841 × 1189 mm).
 
 ---
 
@@ -160,14 +172,14 @@ This study follows the **STROBE** (Strengthening the Reporting of Observational 
 
 ## 10. Ethical Statement
 
-This study received **Ghana Health Service Ethics Review Board approval**. All data used are de-identified secondary data from the 2022 Ghana DHS and 2021 Census. No primary data collection from individual participants was conducted.
+This study analyses publicly released aggregate data from the Ghana Demographic and Health Survey 2022 (ICF International) and the Ghana Statistical Service 2021 Population and Housing Census. No individual participant data were accessed. All inputs are de-identified district and regional summary statistics. Ethical review was not required for analysis of publicly available aggregate statistics; DHS data were accessed under the standard DHS Programme Data Use Agreement.
 
 ---
 
 ## 11. Citation
 
 **APA:**
-Ghanem, V. G. (2026). *Subnational Spatial Distribution and Ensemble ML Predictors of Neonatal and Under-Five Mortality Across Ghana's 261 Health Districts*. GitHub. https://github.com/valentineghanem-bit/ghana-child-mortality-261-districts
+Ghanem, V. G. (2026). *Subnational Spatial Distribution and Ensemble ML Predictors of Neonatal and Under-Five Mortality Across Ghana's 261 Health Districts.* GitHub. https://github.com/valentineghanem-bit/ghana-child-mortality-261-districts
 
 **BibTeX:**
 ```bibtex
@@ -185,25 +197,20 @@ A machine-readable citation is provided in `CITATION.cff`.
 
 ## 12. License
 
-Code is released under the **MIT License** — see [LICENSE](LICENSE) for details. Outputs and figures: CC BY 4.0.
+Code is released under the **MIT License** — see [LICENSE](LICENSE) for details.
+Outputs and figures: **CC BY 4.0**.
 
 ---
 
 ## 13. Author & Contact
 
-- **Valentine Golden Ghanem**
-  Ghana COCOBOD Cocoa Clinic, Accra, Ghana
-  Email: [valentineghanem@gmail.com](mailto:valentineghanem@gmail.com)
-  ORCID: [0009-0002-8332-0220](https://orcid.org/0009-0002-8332-0220)
+**Valentine Golden Ghanem**
+Ghana COCOBOD Cocoa Clinic, Accra, Ghana
+Email: valentineghanem@gmail.com
+ORCID: [0009-0002-8332-0220](https://orcid.org/0009-0002-8332-0220)
 
 ---
 
 ## 14. Acknowledgements
 
-- **Ghana Demographic and Health Survey programme** (ICF International) for survey data access under signed Data Use Agreement.
-- **Ghana Statistical Service** for the 2021 Population and Housing Census and administrative boundary data.
-- **WHO Global Health Observatory** for national-level indicators.
-- **Ghana Health Service** for the Ethics Review Board approval and supportive guidance.
-
----
-
+The author thanks the DHS Programme and ICF International for the 2022 Ghana DHS, and the Ghana Statistical Service for the 2021 Census district files and boundary GeoJSON. Spatial analysis relied on esda, libpysal, and spdep. Ensemble modelling used scikit-learn. The North–South mortality gradient documented here highlights a persistent structural disparity that pre-dates the survey data and demands sustained programmatic attention.
